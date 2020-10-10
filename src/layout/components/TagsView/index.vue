@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
-    <!-- <hamburger /> -->
+    <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" />
+
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">
         当前位置：{{ parentName }}
@@ -14,11 +15,10 @@
 </template>
 
 <script>
-// import store from "@/store/index";
-// import Hamburger from '@/components/Hamburger/index'
+import { mapGetters } from 'vuex'
+import Hamburger from '@/components/Hamburger/index'
 export default {
-  // components: { Hamburger },
-  // store,
+  components: { Hamburger },
   data() {
     return {
       active: [],
@@ -26,6 +26,11 @@ export default {
       selfName: null,
       collapse: true
     }
+  },
+  computed: {
+    ...mapGetters([
+      'sidebar'
+    ])
   },
   created() {
     this.getIndex()
@@ -42,8 +47,8 @@ export default {
         }
       })
     },
-    show1() {
-      console.log(111)
+    toggleSideBar() {
+      this.$store.dispatch('app/toggleSideBar')
     }
   }
 }

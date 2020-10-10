@@ -4,6 +4,8 @@ import getters from './getters'
 
 Vue.use(Vuex)
 
+// mutations是改变state的 action是提交mutations实现actions里要传入两个参数context和playload
+// 调用actions的时候，使用this.$store.dispatch("actionsName",playload)
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 const modulesFiles = require.context('./modules', true, /\.js$/)
 

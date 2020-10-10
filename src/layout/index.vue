@@ -5,7 +5,7 @@
     </el-header>
 
     <el-container>
-      <el-aside width="200px">
+      <el-aside :width="sidebar.opened?'200px' : '56px'" class="el-aside">
         <sidebar />
       </el-aside>
       <el-main class="el-main">
@@ -20,7 +20,7 @@
 import Sidebar from '@/layout/components/Sidebar/index'
 import Navbar from '@/layout/components/Navbar'
 import TagsView from '@/layout/components/TagsView/index'
-
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Navbar,
@@ -32,7 +32,17 @@ export default {
       username: '许浩'
     }
   },
-  methods: {}
+  computed: {
+    ...mapGetters([
+      'sidebar'
+    ])
+  },
+  created() {
+    console.log(this.sidebar)
+  },
+  methods: {
+
+  }
 }
 </script>
 
@@ -42,6 +52,9 @@ export default {
   padding: 0;
   border-bottom: 1px solid rgb(84, 81, 89);
   height: 73px;
+}
+.el-aside {
+  overflow: hidden;
 }
 .el-main {
   color: #777;

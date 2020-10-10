@@ -3,7 +3,7 @@
     <el-menu
       default-active="1"
       class="el-menu-vertical-demo"
-      :collapse="false"
+      :collapse="isCollapse"
       text-color="#6e768e"
       active-text-color="#55bbf2"
       menu-trigger="click"
@@ -42,18 +42,20 @@
 </template>
 
 <script>
-import store from '@/store/index'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Mainleft',
-  store,
   data() {
     return {
       menu: []
     }
   },
   computed: {
-    iscollapse() {
+    ...mapGetters([
+      'sidebar'
+    ]),
+    isCollapse() {
       return !this.sidebar.opened
     }
   },
