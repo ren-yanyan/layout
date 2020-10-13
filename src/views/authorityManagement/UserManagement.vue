@@ -3,8 +3,8 @@
     <div class="btns">
       <el-button type="text" @click="add">新增</el-button>
       <!-- 修改 -->
-      <el-button type="text" @click="dialogFormVisible = true">修改</el-button>
-      <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-button type="text" @click="edit">修改</el-button>
+      <el-dialog :title="dialogStatus" :visible.sync="dialogFormVisible">
         <el-form ref="dataForm" :model="form" :rules="rules" :label-position="labelPosition">
           <el-form-item label="用户名" prop="username" :label-width="formLabelWidth">
             <el-input v-model="form.username" autocomplete="off" />
@@ -85,10 +85,6 @@ export default {
       // 新增修改弹窗
       dialogFormVisible: false,
       dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
       rules: {
         username: [{ required: true, message: 'username is required', trigger: 'change' }],
         realname: [{ required: true, message: 'realname is required', trigger: 'change' }],
@@ -112,6 +108,7 @@ export default {
         .then(res => {
           this.tableData = res.data
           this.form = res.data[0]
+          console.log(this.form)
         })
         .catch(err => {
           console.log('调用失败', err)

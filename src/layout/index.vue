@@ -9,6 +9,9 @@
         <sidebar />
       </el-aside>
       <el-main class="el-main">
+        <right-panel v-if="showSettings">
+          <settings />
+        </right-panel>
         <tags-view />
         <router-view />
       </el-main>
@@ -17,15 +20,20 @@
 </template>
 
 <script>
-import Sidebar from '@/layout/components/Sidebar/index'
-import Navbar from '@/layout/components/Navbar'
-import TagsView from '@/layout/components/TagsView/index'
-import { mapGetters } from 'vuex'
+// import Sidebar from '@/layout/components/Sidebar/index'
+// import Navbar from '@/layout/components/Navbar'
+// import TagsView from '@/layout/components/TagsView/index'
+// import Settings from '@/layout/components/Settings/index'
+import RightPanel from '@/layout/components/RightPanel/index'
+import { Navbar, Settings, Sidebar, TagsView } from './components'
+import { mapState } from 'vuex'
 export default {
   components: {
     Navbar,
     Sidebar,
-    TagsView
+    TagsView,
+    Settings,
+    RightPanel
   },
   data() {
     return {
@@ -33,12 +41,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ])
+    ...mapState({
+      sidebar: state => state.app.sidebar,
+      showSettings: state => state.settings.showSettings
+    })
   },
   created() {
-    console.log(this.sidebar)
   },
   methods: {
 

@@ -8,9 +8,10 @@
       active-text-color="#55bbf2"
       menu-trigger="click"
       style="height: 100%"
+      :unique-opened="true"
       router
     >
-      <el-menu-item index="main" @click="handleTitle('首页')">
+      <el-menu-item index="main">
         <i class="el-icon-menu" />
         <span slot="title">首页</span>
       </el-menu-item>
@@ -31,7 +32,6 @@
             v-if="list.item != null"
             class="menulist"
             :index="list.path"
-            @click="handleTitle(item.title, list.item)"
           >
             {{ list.item }}
           </el-menu-item>
@@ -64,15 +64,15 @@ export default {
   },
   methods: {
     // 点击标题传递参数给navigator组件
-    handleTitle(parentName, selfName) {
-      if (selfName == null) {
-        const naverbar = parentName
-        this.bus.$emit('naverbar', naverbar)
-      } else {
-        const naverbar = parentName + selfName
-        this.bus.$emit('naverbar', naverbar)
-      }
-    },
+    // handleTitle(parentName, selfName) {
+    //   if (selfName == null) {
+    //     const naverbar = parentName
+    //     this.$emit('naverbar', naverbar)
+    //   } else {
+    //     const naverbar = parentName + selfName
+    //     this.$emit('naverbar', naverbar)
+    //   }
+    // },
     getmenuinfo() {
       this.$axios.get(`/getMenuInfo`).then(res => {
         this.menu = res.data

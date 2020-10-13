@@ -55,36 +55,6 @@ const tableData = [
     realname: 'aaaa',
     userrole: 'aaaa',
     description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
   }
 ]
 // 调用模拟数据方法
@@ -158,7 +128,7 @@ const menuInfo = [
     title: '报表管理',
     icon: 'el-icon-picture',
     content: [
-      { item: '流量统计', path: '/studentManage' },
+      { item: '流量统计', path: '/Statistics' },
       { item: '数据库统计', path: '/addStudent' },
       { item: '文件统计', path: '/addStudent' }
     ]
