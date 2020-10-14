@@ -1,176 +1,58 @@
-import Mock from 'mockjs' // 引入mockjs，npm已安装
-// 引入random对象,随机生成数据的对象，（与占位符@一样）
-Mock.setup({
-  timeout: 1000
-  // 设置请求延时时间
-})
-const tableData = [
-  {
-    username: '@title(1, 5)',
-    realname: '@title(1, 5)',
-    userrole: '@title(1, 5)',
-    description: '@title(1, 5)'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }, {
-    username: 'aaaa',
-    realname: 'aaaa',
-    userrole: 'aaaa',
-    description: 'aaaa'
-  }
+const Mock = require('mockjs')
+const { param2Obj } = require('./utils.js')
+
+const user = require('./user.js')
+// const role = require('./role/index.js')
+// const article = require('./article.js')
+// const search = require('./remote-search.js')
+
+const mocks = [
+  ...user
 ]
-// 调用模拟数据方法
-Mock.mock('/user', /post|get/i, tableData)
-const menuInfo = [
-  {
-    index: '2',
-    title: '权限管理',
-    icon: 'el-icon-user',
-    content: [
-      { item: '用户管理', path: '/userManagement' },
-      { item: '角色管理', path: '/roleManagement' },
-      {
-        item: '菜单管理',
-        path: '/menuManagement'
+
+// for front mock
+// please use it cautiously, it will redefine XMLHttpRequest,
+// which will cause many of your third-party libraries to be invalidated(like progress event).
+function mockXHR() {
+  // mock patch
+  // https://github.com/nuysoft/Mock/issues/300
+  Mock.XHR.prototype.proxy_send = Mock.XHR.prototype.send
+  Mock.XHR.prototype.send = function() {
+    if (this.custom.xhr) {
+      this.custom.xhr.withCredentials = this.withCredentials || false
+
+      if (this.responseType) {
+        this.custom.xhr.responseType = this.responseType
       }
-    ]
-  },
-  {
-    index: '3',
-    title: '数据交换',
-    icon: 'el-icon-coin',
-    content: [
-      { item: '交换对象配置', path: '/answerDescription' },
-      {
-        item: '任务管理',
-        path: '/selectAnswer'
-      }
-    ]
-  },
-  {
-    index: '4',
-    title: '日志审计',
-    icon: 'el-icon-tickets',
-    content: [
-      { item: '用户日志', path: '/allStudentsGrade' },
-      { item: '日志下载', path: '/grade' },
-      {
-        item: '系统日志',
-        path: '/selectExamToPart'
-      }
-    ]
-  },
-  {
-    index: '5',
-    title: '系统管理',
-    icon: 'el-icon-setting',
-    content: [
-      { item: '参数配置', path: '/studentManage' },
-      { item: '初始化配置', path: '/addStudent' },
-      {
-        item: '业务树',
-        path: '/addStudent'
-      },
-      { item: '导入导出', path: '/addStudent' },
-      { item: '恢复出厂设置', path: '/addStudent' },
-      {
-        item: '病毒库管理',
-        path: '/addStudent'
-      },
-      { item: '网络配置', path: '/addStudent' },
-      { item: '配置ntp', path: '/addStudent' },
-      {
-        item: '数据转发',
-        path: '/addStudent'
-      }
-    ]
-  },
-  {
-    index: '6',
-    title: '报表管理',
-    icon: 'el-icon-picture',
-    content: [
-      { item: '流量统计', path: '/Statistics' },
-      { item: '数据库统计', path: '/addStudent' },
-      { item: '文件统计', path: '/addStudent' }
-    ]
+    }
+    this.proxy_send(...arguments)
   }
-]
-Mock.mock('/getMenuInfo', /post|get/i, menuInfo)
-const taskRunStatus = [
-  {
-    name: '任务名称一',
-    type: 0,
-    startTime: '2020-8-24',
-    endTime: '2022-1-5',
-    number: 0,
-    flow: 0,
-    status: 0
-  },
-  {
-    name: '任务名称二',
-    type: 1,
-    startTime: '2020-8-24',
-    endTime: '2022-1-5',
-    number: 0,
-    flow: 0,
-    status: 0
-  },
-  {
-    name: '任务名称三',
-    type: 2,
-    startTime: '2020-8-24',
-    endTime: '2022-1-5',
-    number: 0,
-    flow: 0,
-    status: 0
-  },
-  {
-    name: '任务名称四',
-    type: 0,
-    startTime: '2020-8-24',
-    endTime: '2022-1-5',
-    number: 0,
-    flow: 0,
-    status: 0
+
+  function XHR2ExpressReqWrap(respond) {
+    return function(options) {
+      let result = null
+      if (respond instanceof Function) {
+        const { body, type, url } = options
+        // https://expressjs.com/en/4x/api.html#req
+        result = respond({
+          method: type,
+          body: JSON.parse(body),
+          query: param2Obj(url)
+        })
+      } else {
+        result = respond
+      }
+      return Mock.mock(result)
+    }
   }
-]
-Mock.mock('/taskRunStatus', /post|get/i, taskRunStatus)
+
+  for (const i of mocks) {
+    Mock.mock(new RegExp(i.url), i.type || 'get', XHR2ExpressReqWrap(i.response))
+  }
+}
+
+// export { mocks, mockXHR }
+module.exports = {
+  mocks,
+  mockXHR
+}

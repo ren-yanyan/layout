@@ -90,25 +90,41 @@ export default {
       },
       labelPosition: 'left',
       formLabelAlign: {
-        username: 'adminaa',
-        password: '11111'
+        username: 'admin',
+        password: '111111'
       },
-      passwordType: 'password'
+      passwordType: 'password',
+      outerQuery: {},
+      loading: false,
+      redirect: undefined
     }
   },
   methods: {
     ...mapMutations('routeJump', ['changeLogin']),
     login() {
-      console.log('登录操作执行-------')
-      var res = {
-        data: {
-          data: {
-            role: '0',
-            teacherName: 'aaa',
-            teacherId: 1
-          }
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          console.log('登录操作执行-------')
+          this.loading = true
+          this.$store.dispatch('user/login', this.formLabelAlign)
+            .then(() => {
+              this.$router.push({ path: this.redirect || '/', query: this.outerQuery })
+            })
+            .catch(() => {
+              this.loading = false
+            })
         }
-      }
+      })
+
+      // var res = {
+      //   data: {
+      //     data: {
+      //       role: '0',
+      //       teacherName: 'aaa',
+      //       teacherId: 1
+      //     }
+      //   }
+      // }
       // this.$axios({
       //   url: `/api/login`,
       //   method: 'post',
@@ -116,36 +132,36 @@ export default {
       //     ...this.formLabelAlign
       //   }
       // }).then(res=>{
-      const resData = res.data.data
-      if (resData != null) {
-        switch (resData.role) {
-          case '0': // 管理员
-            this.$cookies.set('cname', resData.adminName)
-            this.$cookies.set('cid', resData.adminId)
-            this.$cookies.set('role', 0)
-            this.$router.push({ path: '/main' }) // 跳转到首页
-            break
-          case '1': // 教师
-            this.$cookies.set('cname', resData.teacherName)
-            this.$cookies.set('cid', resData.teacherId)
-            this.$cookies.set('role', 1)
-            this.$router.push({ path: '/main' }) // 跳转到教师用户
-            break
-          case '2': // 学生
-            this.$cookies.set('cname', resData.studentName)
-            this.$cookies.set('cid', resData.studentId)
-            this.$router.push({ path: '/main' })
-            break
-        }
-      }
-      if (resData == null) {
-        // 错误提示
-        this.$message({
-          showClose: true,
-          type: 'error',
-          message: '用户名或者密码错误'
-        })
-      }
+      // const resData = res.data.data
+      // if (resData != null) {
+      //   switch (resData.role) {
+      //     case '0': // 管理员
+      //       this.$cookies.set('cname', resData.adminName)
+      //       this.$cookies.set('cid', resData.adminId)
+      //       this.$cookies.set('role', 0)
+      //       this.$router.push({ path: '/main' }) // 跳转到首页
+      //       break
+      //     case '1': // 教师
+      //       this.$cookies.set('cname', resData.teacherName)
+      //       this.$cookies.set('cid', resData.teacherId)
+      //       this.$cookies.set('role', 1)
+      //       this.$router.push({ path: '/main' }) // 跳转到教师用户
+      //       break
+      //     case '2': // 学生
+      //       this.$cookies.set('cname', resData.studentName)
+      //       this.$cookies.set('cid', resData.studentId)
+      //       this.$router.push({ path: '/main' })
+      //       break
+      //   }
+      // }
+      // if (resData == null) {
+      //   // 错误提示
+      //   this.$message({
+      //     showClose: true,
+      //     type: 'error',
+      //     message: '用户名或者密码错误'
+      //   })
+      // }
       // })
     },
     clickTag(key) {
@@ -195,7 +211,6 @@ export default {
   margin-top: 200px;
 }
 .body-content {
-  width: 350px;
   margin: auto;
 }
 </style>
