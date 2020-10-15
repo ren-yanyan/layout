@@ -1,7 +1,6 @@
 import request from '@/utils/request.js'
 
 export function login(data) {
-  debugger
   return request({
     url: '/vue-element-admin/user/login',
     method: 'post',
@@ -10,6 +9,7 @@ export function login(data) {
 }
 
 export function getInfo(token) {
+  debugger
   return request({
     url: '/vue-element-admin/user/info',
     method: 'get',

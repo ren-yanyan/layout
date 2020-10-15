@@ -1,5 +1,7 @@
 <template>
   <div id="main-left">
+    {{ permission_routes }}
+
     <el-menu
       default-active="1"
       class="el-menu-vertical-demo"
@@ -16,7 +18,7 @@
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu
-        v-for="(item, index) in menu"
+        v-for="(item, index) in permission_routes"
         :key="index"
         :index="item.index"
       >
@@ -25,7 +27,7 @@
           <span>{{ item.title }}</span>
         </template>
         <el-menu-item-group
-          v-for="(list, index1) in item.content"
+          v-for="(list, index1) in item.path"
           :key="index1"
         >
           <el-menu-item
@@ -48,11 +50,12 @@ export default {
   name: 'Mainleft',
   data() {
     return {
-      menu: []
+
     }
   },
   computed: {
     ...mapGetters([
+      'permission_routes',
       'sidebar'
     ]),
     isCollapse() {
@@ -60,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    this.getmenuinfo()
+    // this.getmenuinfo()
   },
   methods: {
     // 点击标题传递参数给navigator组件
@@ -73,13 +76,13 @@ export default {
     //     this.$emit('naverbar', naverbar)
     //   }
     // },
-    getmenuinfo() {
-      this.$axios.get(`/getMenuInfo`).then(res => {
-        this.menu = res.data
-      }).catch(err => {
-        console.log('调用失败', err)
-      })
-    }
+    // getmenuinfo() {
+    //   this.$axios.get(`/getMenuInfo`).then(res => {
+    //     this.menu = res.data
+    //   }).catch(err => {
+    //     console.log('调用失败', err)
+    //   })
+    // }
   }
 
 }

@@ -10,9 +10,15 @@ import axios from 'axios'
 import './mock/mock.js'
 import VueCookies from 'vue-cookies'
 import echarts from 'echarts'
+import './permission'
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.$echarts = echarts
+if (process.env.NODE_ENV === 'development') {
+  const { mockXHR } = require('./mock/mock.js')
+  mockXHR()
+}
+
 Vue.use(ElementUI)
 Vue.use(VueCookies)
 new Vue({

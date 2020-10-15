@@ -99,6 +99,17 @@ export default {
       redirect: undefined
     }
   },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
+        }
+      }
+    }
+  },
   methods: {
     ...mapMutations('routeJump', ['changeLogin']),
     login() {
@@ -108,7 +119,8 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.formLabelAlign)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.outerQuery })
+              console.log(this.redirect, this.outerQuery)
+              this.$router.push({ path: '/main' })
             })
             .catch(() => {
               this.loading = false
@@ -166,6 +178,14 @@ export default {
     },
     clickTag(key) {
       this.role = key
+    },
+    getOtherQuery(query) {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
+        }
+        return acc
+      }, {})
     }
   }
 }

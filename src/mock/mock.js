@@ -2,9 +2,6 @@ const Mock = require('mockjs')
 const { param2Obj } = require('./utils.js')
 
 const user = require('./user.js')
-// const role = require('./role/index.js')
-// const article = require('./article.js')
-// const search = require('./remote-search.js')
 
 const mocks = [
   ...user
@@ -51,8 +48,8 @@ function mockXHR() {
   }
 }
 
-// export { mocks, mockXHR }
 module.exports = {
   mocks,
   mockXHR
 }
+
