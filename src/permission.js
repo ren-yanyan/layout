@@ -19,10 +19,12 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
+          debugger
           // 获取用户信息
           const { roles } = await store.dispatch('user/getInfo')
           // 根据角色返回路由图
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          debugger
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
         } catch (error) {

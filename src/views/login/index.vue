@@ -214,6 +214,7 @@ export default {
   background: #fff;
   padding: 40px;
   border-radius: 5px;
+  width: 475px
 }
 .title {
   text-align: center;

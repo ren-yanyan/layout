@@ -9,7 +9,6 @@ export function login(data) {
 }
 
 export function getInfo(token) {
-  debugger
   return request({
     url: '/vue-element-admin/user/info',
     method: 'get',

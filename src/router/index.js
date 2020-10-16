@@ -12,53 +12,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/login',
-    component: Login,
-    hidden: true
-  },
-  {
-    path: '/main',
-    component: Layout,
-    children: [
-      {
-        path: '/',
-        component: MainIndex,
-        name: 'MainIndex',
-        meta: { title: 'Main', icon: 'mainindex', affix: true }
-      },
-      {
-        path: '/answerDescription', // 交换对象配置
-        component: () => import('@/views/dataExchange/answerDescription'),
-        name: 'answerDescription',
-        meta: { title: 'answerDescription', requireAuth: true }
-      },
-      {
-        path: '/Statistics', // 流量统计
-        component: () => import('@/views/Statistics/index'),
-        name: 'Statistics',
-        meta: { title: 'Statistics', requireAuth: true }
-      }
-    ]
-  },
-  {
-    path: '/404',
-    name: '404',
-    meta: { title: '404', requireAuth: true },
-    component: () => import(/* webpackChunkName: "about" */ '../views/error/404.vue')
-  }
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
-  {
-    path: '/',
-    component: Login,
-    hidden: true
-  },
-  {
     path: '/main',
     component: Layout,
     children: [
@@ -105,6 +58,25 @@ export const asyncRoutes = [
     name: '404',
     meta: { title: '404', requireAuth: true },
     component: () => import(/* webpackChunkName: "about" */ '../views/error/404.vue')
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/icons/index.vue'),
+        name: 'Icons',
+        meta: { title: 'Icons', icon: 'icon', noCache: true }
+      }
+    ]
   }
 ]
 

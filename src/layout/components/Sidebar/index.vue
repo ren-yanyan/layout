@@ -1,53 +1,31 @@
 <template>
   <div id="main-left">
-    {{ permission_routes }}
-
-    <el-menu
-      default-active="1"
-      class="el-menu-vertical-demo"
-      :collapse="isCollapse"
-      text-color="#6e768e"
-      active-text-color="#55bbf2"
-      menu-trigger="click"
-      style="height: 100%"
-      :unique-opened="true"
-      router
-    >
-      <el-menu-item index="main">
-        <i class="el-icon-menu" />
-        <span slot="title">首页</span>
-      </el-menu-item>
-      <el-submenu
-        v-for="(item, index) in permission_routes"
-        :key="index"
-        :index="item.index"
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="activeMenu"
+        class="el-menu-vertical-demo"
+        :collapse="isCollapse"
+        text-color="#6e768e"
+        active-text-color="#55bbf2"
+        menu-trigger="click"
+        style="height: 100%"
+        :unique-opened="true"
+        router
       >
-        <template slot="title">
-          <i class="iconfont" :class="item.icon" />
-          <span>{{ item.title }}</span>
-        </template>
-        <el-menu-item-group
-          v-for="(list, index1) in item.path"
-          :key="index1"
-        >
-          <el-menu-item
-            v-if="list.item != null"
-            class="menulist"
-            :index="list.path"
-          >
-            {{ list.item }}
-          </el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-    </el-menu>
+        <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
+import SidebarItem from './SidebarItem'
 export default {
   name: 'Mainleft',
+  components: {
+    SidebarItem
+  },
   data() {
     return {
 
@@ -60,10 +38,24 @@ export default {
     ]),
     isCollapse() {
       return !this.sidebar.opened
+    },
+    activeMenu() {
+      const route = this.$route
+      const { meta, path } = route
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
     }
   },
   mounted() {
     // this.getmenuinfo()
+    console.log(this.permission_routes)
+    console.log(this.permission_routes[2])
+  },
+  created() {
+    // this.getmenuinfo()
+    console.log(this.permission_routes)
   },
   methods: {
     // 点击标题传递参数给navigator组件
