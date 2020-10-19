@@ -7,57 +7,81 @@ Vue.use(Router)
 
 export const constantRoutes = [
   {
-    path: '/',
+    path: '/login',
     component: Login,
     hidden: true
   },
   {
-    path: '/main',
+    path: '/',
     component: Layout,
+    redirect: '/home',
     children: [
       {
-        path: '/',
+        path: 'home',
         component: MainIndex,
-        name: 'MainIndex',
-        meta: { title: 'Main', icon: 'mainindex', affix: true }
-      },
-      {
-        path: '/roleManagement', // 角色管理
-        component: () => import('@/views/authorityManagement/RoleManagement'),
-        name: 'roleManagement',
-        meta: { title: 'RoleManagement', requireAuth: true }
-      },
-      {
-        path: '/userManagement', // 用户管理
-        component: () => import('@/views/authorityManagement/UserManagement'),
-        name: 'userManagement',
-        meta: { title: 'UserManagement', requireAuth: true }
-      },
-      {
-        path: '/menuManagement', // 菜单管理
-        component: () => import('@/views/authorityManagement/MenuManagement'),
-        name: 'menuManagement',
-        meta: { title: 'MenuManagement', requireAuth: true }
-      },
-      {
-        path: '/answerDescription', // 交换对象配置
-        component: () => import('@/views/dataExchange/answerDescription'),
-        name: 'answerDescription',
-        meta: { title: 'answerDescription', requireAuth: true }
-      },
-      {
-        path: '/Statistics', // 流量统计
-        component: () => import('@/views/Statistics/index'),
-        name: 'Statistics',
-        meta: { title: 'Statistics', requireAuth: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'mainindex' }
       }
     ]
   },
   {
-    path: '/404',
-    name: '404',
-    meta: { title: '404', requireAuth: true },
-    component: () => import(/* webpackChunkName: "about" */ '../views/error/404.vue')
+    path: '/authorityManagement',
+    name: '权限管理',
+    component: Layout,
+    meta: {
+      title: '权限管理',
+      icon: 'lock'
+    },
+    children: [
+      {
+        path: '/authorityManagement/roleManagement', // 角色管理
+        component: () => import('@/views/authorityManagement/RoleManagement'),
+        name: '角色管理',
+        meta: { title: '角色管理', requireAuth: true }
+      },
+      {
+        path: '/authorityManagement/userManagement', // 用户管理
+        component: () => import('@/views/authorityManagement/UserManagement.vue'),
+        name: '用户管理',
+        meta: { title: '用户管理', requireAuth: true }
+      },
+      {
+        path: '/authorityManagement/menuManagement', // 菜单管理
+        component: () => import('@/views/authorityManagement/MenuManagement'),
+        name: '菜单管理',
+        meta: { title: '菜单管理', requireAuth: true }
+      }
+    ]
+  },
+  {
+    path: 'dataExchange',
+    name: '数据交换',
+    component: Layout,
+    meta: {
+      title: '数据交换',
+      icon: 'lock'
+    },
+    children: [
+      {
+        path: '/answerDescription', // 交换对象配置
+        component: () => import('@/views/dataExchange/answerDescription'),
+        name: '交换对象配置',
+        meta: { title: '交换对象配置', requireAuth: true }
+      }
+    ]
+  },
+  {
+    path: 'reportManagement; ',
+    name: '报表管理',
+    component: Layout,
+    children: [
+      {
+        path: '/Statistics', // 流量统计
+        component: () => import('@/views/Statistics/index'),
+        name: '流量统计',
+        meta: { title: '流量统计', requireAuth: true }
+      }
+    ]
   }
 ]
 

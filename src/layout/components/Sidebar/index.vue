@@ -10,7 +10,6 @@
         menu-trigger="click"
         style="height: 100%"
         :unique-opened="true"
-        router
       >
         <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
@@ -50,12 +49,9 @@ export default {
   },
   mounted() {
     // this.getmenuinfo()
-    console.log(this.permission_routes)
-    console.log(this.permission_routes[2])
   },
   created() {
     // this.getmenuinfo()
-    console.log(this.permission_routes)
   },
   methods: {
     // 点击标题传递参数给navigator组件

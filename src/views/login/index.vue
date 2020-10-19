@@ -120,7 +120,7 @@ export default {
           this.$store.dispatch('user/login', this.formLabelAlign)
             .then(() => {
               console.log(this.redirect, this.outerQuery)
-              this.$router.push({ path: '/main' })
+              this.$router.push({ path: '/home' })
             })
             .catch(() => {
               this.loading = false

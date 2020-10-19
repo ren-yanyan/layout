@@ -22,7 +22,7 @@ export default {
     }
   },
   mounted() {
-    this.showData()
+    // this.showData()
   },
   methods: {
     showData() {
