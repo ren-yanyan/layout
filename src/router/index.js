@@ -20,7 +20,7 @@ export const constantRoutes = [
         path: 'home',
         component: MainIndex,
         name: '首页',
-        meta: { title: '首页', icon: 'mainindex' }
+        meta: { title: '首页', icon: 'el-icon-s-home' }
       }
     ]
   },
@@ -30,7 +30,7 @@ export const constantRoutes = [
     component: Layout,
     meta: {
       title: '权限管理',
-      icon: 'lock'
+      icon: 'el-icon-s-custom'
     },
     children: [
       {
@@ -59,7 +59,7 @@ export const constantRoutes = [
     component: Layout,
     meta: {
       title: '数据交换',
-      icon: 'lock'
+      icon: 'icon-data'
     },
     children: [
       {
@@ -74,6 +74,10 @@ export const constantRoutes = [
     path: 'reportManagement; ',
     name: '报表管理',
     component: Layout,
+    meta: {
+      title: '数据交换',
+      icon: 'icon-baogao'
+    },
     children: [
       {
         path: '/Statistics', // 流量统计

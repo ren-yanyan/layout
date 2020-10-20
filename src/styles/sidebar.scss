@@ -1,0 +1,10 @@
+.el-scrollbar {
+  height: 100%;
+  .scrollbar-wrapper {
+    overflow-x: hidden;
+    .el-scrollbar__view {
+      height: 100%;
+    }
+  }
+  
+}
